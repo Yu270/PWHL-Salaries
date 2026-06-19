@@ -11,9 +11,6 @@ st.title("Sommaire")
 st.text("Cette page présente un sommaire à haut niveau des salaires de base de la LPHF.")
 
 df = pd.read_csv("./data/PWHL_player_salaries_2025-2026.csv")
-df.rename(columns={"Province de naissance": "Province/état de naissance"},inplace=True)
-df["Âge"] = 2026-df["Année de naissance"]
-df["Nombre de joueuses"] = 1
 
 min_games = st.number_input("Nombre minimal de parties jouées lors de la saison régulière 2025-2026",min_value=0,max_value=20,step=5,help="Exclure les joueuses qui ont joué moins de X parties durant la saison régulière 2025-2026.")
 
