@@ -25,7 +25,6 @@ GLOBAL_MEDIAN = df["Salaire de base 2025-2026"].median()
 features = {
     "Âge": {
         "type": "cont",
-        "comparison": "local",
         "label_rot": "auto",
     },
 }
@@ -37,15 +36,15 @@ feature_params = features[feature]
 
 with st.container():
     st.subheader(f"Distribution du salaire de base 2025-2026 selon {feature}")
-    fig = scatter_plot(df,feature,feature_params["type"],comparison=feature_params["comparison"],label_rot=feature_params["label_rot"])
+    fig = scatter_plot(df,feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
     st.pyplot(fig)
 
 with st.container():
     st.subheader("Salaire moyen selon "+feature)
-    fig = mean_plot(df,feature,feature_params["type"],comparison=feature_params["comparison"],label_rot=feature_params["label_rot"])
+    fig = mean_plot(df,feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
     st.pyplot(fig)
 
 with st.container():
     st.subheader("Salaire médian selon "+feature)
-    fig = median_plot(df,feature,feature_params["type"],comparison=feature_params["comparison"],label_rot=feature_params["label_rot"])
+    fig = median_plot(df,feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
     st.pyplot(fig)
