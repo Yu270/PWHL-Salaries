@@ -16,6 +16,7 @@ def players_by_continuous(data: pd.DataFrame, var: str):
         data: données à utiliser
         var: nom de la caractéristique
     """
+    data[var] = data[var].astype(int)
     with st.container(horizontal=True):
         min_value, max_value = data[var].min(), data[var].max()
         st.session_state.min_value = st.number_input("Borne inférieure",min_value=min_value,max_value=max_value,help=f"Afficher les joueuses dont {var} est supérieur ou égal à X.")
@@ -60,33 +61,56 @@ features = {
         "type": "cont",
         "label_rot": "auto",
     },
+    "Pays de naissance": {
+        "type": "cat",
+        "label_rot": "auto",
+    },
+    "Province de naissance": {
+        "type": "cat",
+        "label_rot": "auto",
+    },
+    "État de naissance": {
+        "type": "cat",
+        "label_rot": "auto",
+    },
+    "Position": {
+        "type": "cat",
+        "label_rot": "auto",
+    },
+    "Recrue": {
+        "type": "cat",
+        "label_rot": "auto",
+    },
+    "Numéro": {
+        "type": "cont",
+        "label_rot": "auto",
+    },
 }
 feature_names = list(features.keys())
-feature_names.sort()
 
-feature = st.selectbox("Caractéristique",options=["Âge"],help="Nom de la caractéristique")
+feature = st.selectbox("Caractéristique",options=feature_names,help="Nom de la caractéristique")
 feature_params = features[feature]
 
 with st.container():
     st.subheader(f"Distribution du salaire de base 2025-2026 selon {feature}")
-    fig = scatter_plot(df,feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
+    fig = scatter_plot(df[df[feature].notna()],feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
     st.pyplot(fig)
 
 with st.container():
     st.subheader("Salaire moyen selon "+feature)
-    fig = mean_plot(df,feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
+    fig = mean_plot(df[df[feature].notna()],feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
     st.pyplot(fig)
 
 with st.container():
     st.subheader("Salaire médian selon "+feature)
-    fig = median_plot(df,feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
+    fig = median_plot(df[df[feature].notna()],feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
     st.pyplot(fig)
 
 with st.container():
     st.subheader("Joueuses selon "+feature)
     if feature_params["type"]=="cont":
-        players_by_continuous(df,feature)
+        players_by_continuous(df[df[feature].notna()],feature)
     elif feature_params["type"]=="cat":
-        players_by_categorical(df,feature)
+        players_by_categorical(df[df[feature].notna()],feature)
     else:
         st.error("Il y a un problème avec cette caractéristique...")
