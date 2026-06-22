@@ -5,7 +5,7 @@ import streamlit as st
 from utils.plots import scatter_plot, mean_plot, median_plot
 
 
-st.set_page_config(page_title="Caractéristiques",page_icon="📊")
+st.set_page_config(page_title="Caractéristiques",page_icon="👤")
 
 @st.fragment
 def players_by_continuous(data: pd.DataFrame, var: str):
@@ -75,11 +75,11 @@ features = {
     },
     "Position": {
         "type": "cat",
-        "label_rot": "auto",
+        "label_rot": 0,
     },
     "Recrue": {
         "type": "cat",
-        "label_rot": "auto",
+        "label_rot": 0,
     },
     "Numéro": {
         "type": "cont",
