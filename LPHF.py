@@ -6,7 +6,7 @@ st.title("Ligue professionnelle de hockey féminin")
 
 with st.container():
     st.subheader("Salaires de la LPHF")
-    st.text("Cette application comprend 1 page pour analyser les salaires de base des joueuses de la LPHF.")
+    st.text("Cette application comprend 3 pages pour analyser les salaires de base des joueuses de la LPHF.")
     st.markdown("* **Sommaire** : sommaire à haut niveau des salaires de base de la LPHF.")
     st.markdown("* **Caractéristiques** : répartition des salaires de base de la LPHF selon différentes caractéristiques des joueuses.")
     st.markdown("* **Performances** : répartition des salaires de base de la LPHF selon les performances des joueuses.")
