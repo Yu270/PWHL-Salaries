@@ -59,30 +59,37 @@ GLOBAL_MEDIAN = df["Salaire de base 2025-2026"].median()
 
 features = {
     "Âge": {
+        "desc": "âge",
         "type": "cont",
         "label_rot": "auto",
     },
     "Pays de naissance": {
+        "desc": "pays de naissance",
         "type": "cat",
         "label_rot": "auto",
     },
     "Province de naissance": {
+        "desc": "province de naissance (pour les joueuses canadiennes seulement)",
         "type": "cat",
         "label_rot": "auto",
     },
     "État de naissance": {
+        "desc": "état de naissance (pour les joueuses américaines seulement)",
         "type": "cat",
         "label_rot": "auto",
     },
     "Position": {
+        "desc": "position sur la glace, attaquante (F), défenseure (D) ou gardienne (G)",
         "type": "cat",
         "label_rot": 0,
     },
     "Recrue": {
+        "desc": "est une recrue? Oui (1) ou non (0)",
         "type": "cat",
         "label_rot": 0,
     },
     "Numéro": {
+        "desc": "numéro porté",
         "type": "cont",
         "label_rot": "auto",
     },
@@ -91,6 +98,7 @@ feature_names = list(features.keys())
 
 feature = st.selectbox("Caractéristique",options=feature_names,help="Nom de la caractéristique")
 feature_params = features[feature]
+st.markdown("*Description* : "+feature_params["desc"])
 corr_df = df[df[feature].notna()]
 
 with st.container():
