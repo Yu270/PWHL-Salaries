@@ -42,102 +42,134 @@ df = df[df["Parties jouées"]>=min_games].copy()
 
 features = {
     "Parties jouées": {
+        "desc": "nombre de parties jouées",
         "dtype": "int",
     },
     "Buts": {
+        "desc": "nombre de buts",
         "dtype": "int",
     },
     "Aides": {
+        "desc": "nombre d'aides",
         "dtype": "int",
     },
     "Points": {
+        "desc": "nombre de points",
         "dtype": "int",
     },
     "Tirs": {
+        "desc": "nombre de tirs au but",
         "dtype": "int",
     },
     "Mises en échec": {
+        "desc": "nombre de mises en échec",
         "dtype": "int",
     },
     "Minutes de pénalité": {
+        "desc": "nombre de minutes de pénalité",
         "dtype": "int",
     },
     "Tirs bloqués": {
+        "desc": "nombre de tirs bloqués",
         "dtype": "int",
     },
     "Mises au jeu": {
+        "desc": "nombre de mises au jeu",
         "dtype": "int",
     },
     "% de mises au jeu": {
+        "desc": "proportion de mises au jeu gagnées",
         "dtype": "float",
     },
     "Points en AN": {
+        "desc": "points en avantage numérique",
         "dtype": "int",
     },
     "Points en DN": {
+        "desc": "points en désavantage numérique",
         "dtype": "int",
     },
     "Temps de jeu moyen": {
+        "desc": "temps de jeu sur la glace moyen par partie",
         "dtype": "float",
     },
     "Minutes pour point": {
+        "desc": "nombre de minutes moyen pour faire un point",
         "dtype": "float",
     },
     "Minutes pour tir": {
+        "desc": "nombre de minutes moyen pour faire un tir au but",
         "dtype": "float",
     },
     "Moyenne de buts": {
+        "desc": "nombre de buts moyen par partie",
         "dtype": "float",
     },
     "Moyenne d'aides": {
+        "desc": "nombre d'aides moyen par partie",
         "dtype": "float",
     },
     "Moyenne de points": {
+        "desc": "nombre de points moyen par partie",
         "dtype": "float",
     },
     "Moyenne de tirs": {
+        "desc": "nombre de tirs moyen par partie",
         "dtype": "float",
     },
     "Moyenne de mises en échec": {
+        "desc": "nombre de mises en échec moyen par partie",
         "dtype": "float",
     },
     "Moyenne de minutes de pénalité": {
+        "desc": "nombre de minutes de pénalité moyen par partie",
         "dtype": "float",
     },
     "Moyenne de tirs bloqués": {
+        "desc": "nombre de tirs bloqués moyen par partie",
         "dtype": "float",
     },
     "% de buts": {
+        "desc": "proportion des tirs au buts qui sont des buts",
         "dtype": "float",
     },
     "Arrêts": {
+        "desc": "nombre d'arrêts effectués",
         "dtype": "int",
     },
     "Moyenne d'arrêts": {
+        "desc": "nombre d'arrêts effectués moyen par partie",
         "dtype": "float",
     },
     "% d'arrêts": {
+        "desc": "proportion des tirs reçus qui sont des arrêts",
         "dtype": "float",
     },
     "Buts alloués": {
+        "desc": "nombre de buts alloués",
         "dtype": "int",
     },
     "Moyenne de buts alloués": {
+        "desc": "nombre de buts alloués moyen par partie",
         "dtype": "float",
     },
     "Victoires": {
+        "desc": "nombre de victoires",
         "dtype": "int",
     },
     "% de victoires": {
+        "desc": "proportion des parties jouées qui sont des victoires",
         "dtype": "float",
     },
     "Jeux blancs": {
+        "desc": "nombre de jeux blancs",
         "dtype": "int",
     },
 }
 feature_names = list(features.keys())
 
 feature = st.selectbox("Caractéristique de performance",options=feature_names,help="Nom de la caractéristique de performance")
+st.markdown("*Description* : "+features[feature]["desc"])
 corr_df = df[df[feature].notna()]
 corr_mean = corr_df["Salaire de base 2025-2026"].mean()
 corr_median = corr_df["Salaire de base 2025-2026"].median()
