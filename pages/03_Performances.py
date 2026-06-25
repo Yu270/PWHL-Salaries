@@ -1,8 +1,10 @@
+import warnings
 import numpy as np
 import pandas as pd
 import streamlit as st
 from scipy.stats import pearsonr
 from utils.plots import scatter_plot, mean_plot, median_plot
+warnings.filterwarnings("ignore")
 
 
 st.set_page_config(page_title="Performances",page_icon="🥅")
@@ -38,25 +40,11 @@ min_games = st.number_input("Nombre minimal de parties jouées lors de la saison
 
 df = df[df["Parties jouées"]>=min_games].copy()
 
-# 'Parties jouées', 'Buts', 'Tirs', 'Mises en échec', 'Tirs bloqués', 'Aides', 'Points', 'Minutes de pénalité', 'Points en AN', 
-# 'Points en DN', 'Mises au jeu', '% de mises au jeu', 'Temps de jeu moyen', 'Minutes pour point', 'Minutes pour tir', 
-# 'Moyenne de buts', 'Moyenne de tirs', 'Moyenne de mises en échec', 'Moyenne de tirs bloqués', 'Moyenne d'aides', 
-# 'Moyenne de points', 'Moyenne de minutes de pénalité', '% de buts', 'Arrêts', 'Buts alloués', 'Jeux blancs', 'Victoires', 
-# 'Moyenne d'arrêts', 'Moyenne de buts alloués', '% d'arrêts', '% de victoires'
 features = {
     "Parties jouées": {
         "dtype": "int",
     },
     "Buts": {
-        "dtype": "int",
-    },
-    "Tirs": {
-        "dtype": "int",
-    },
-    "Mises en échec": {
-        "dtype": "int",
-    },
-    "Tirs bloqués": {
         "dtype": "int",
     },
     "Aides": {
@@ -65,10 +53,85 @@ features = {
     "Points": {
         "dtype": "int",
     },
+    "Tirs": {
+        "dtype": "int",
+    },
+    "Mises en échec": {
+        "dtype": "int",
+    },
     "Minutes de pénalité": {
         "dtype": "int",
     },
+    "Tirs bloqués": {
+        "dtype": "int",
+    },
+    "Mises au jeu": {
+        "dtype": "int",
+    },
+    "% de mises au jeu": {
+        "dtype": "float",
+    },
     "Points en AN": {
+        "dtype": "int",
+    },
+    "Points en DN": {
+        "dtype": "int",
+    },
+    "Temps de jeu moyen": {
+        "dtype": "float",
+    },
+    "Minutes pour point": {
+        "dtype": "float",
+    },
+    "Minutes pour tir": {
+        "dtype": "float",
+    },
+    "Moyenne de buts": {
+        "dtype": "float",
+    },
+    "Moyenne d'aides": {
+        "dtype": "float",
+    },
+    "Moyenne de points": {
+        "dtype": "float",
+    },
+    "Moyenne de tirs": {
+        "dtype": "float",
+    },
+    "Moyenne de mises en échec": {
+        "dtype": "float",
+    },
+    "Moyenne de minutes de pénalité": {
+        "dtype": "float",
+    },
+    "Moyenne de tirs bloqués": {
+        "dtype": "float",
+    },
+    "% de buts": {
+        "dtype": "float",
+    },
+    "Arrêts": {
+        "dtype": "int",
+    },
+    "Moyenne d'arrêts": {
+        "dtype": "float",
+    },
+    "% d'arrêts": {
+        "dtype": "float",
+    },
+    "Buts alloués": {
+        "dtype": "int",
+    },
+    "Moyenne de buts alloués": {
+        "dtype": "float",
+    },
+    "Victoires": {
+        "dtype": "int",
+    },
+    "% de victoires": {
+        "dtype": "float",
+    },
+    "Jeux blancs": {
         "dtype": "int",
     },
 }
