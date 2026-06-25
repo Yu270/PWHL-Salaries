@@ -2,6 +2,7 @@ import datetime
 import numpy as np
 import pandas as pd
 import streamlit as st
+from scipy.stats import pearsonr
 from utils.plots import scatter_plot, mean_plot, median_plot
 
 
@@ -90,27 +91,32 @@ feature_names = list(features.keys())
 
 feature = st.selectbox("Caractéristique",options=feature_names,help="Nom de la caractéristique")
 feature_params = features[feature]
+corr_df = df[df[feature].notna()]
 
 with st.container():
     st.subheader(f"Distribution du salaire de base 2025-2026 selon {feature}")
-    fig = scatter_plot(df[df[feature].notna()],feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
+    fig = scatter_plot(corr_df,feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
     st.pyplot(fig)
+    if feature_params["type"]=="cont":
+        r, p = pearsonr(corr_df[feature],corr_df["Salaire de base 2025-2026"])
+        if p<0.05:
+            st.text(f"Coefficient de corrélation linéaire : {r**2:.4f}")
 
 with st.container():
     st.subheader("Salaire moyen selon "+feature)
-    fig = mean_plot(df[df[feature].notna()],feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
+    fig = mean_plot(corr_df,feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
     st.pyplot(fig)
 
 with st.container():
     st.subheader("Salaire médian selon "+feature)
-    fig = median_plot(df[df[feature].notna()],feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
+    fig = median_plot(corr_df,feature,feature_params["type"],comparison={"mean": GLOBAL_MEAN, "median": GLOBAL_MEDIAN},label_rot=feature_params["label_rot"])
     st.pyplot(fig)
 
 with st.container():
     st.subheader("Joueuses selon "+feature)
     if feature_params["type"]=="cont":
-        players_by_continuous(df[df[feature].notna()],feature)
+        players_by_continuous(corr_df,feature)
     elif feature_params["type"]=="cat":
-        players_by_categorical(df[df[feature].notna()],feature)
+        players_by_categorical(corr_df,feature)
     else:
         st.error("Il y a un problème avec cette caractéristique...")
